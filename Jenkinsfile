@@ -11,14 +11,18 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'g++ main.cpp -o output'
-                build 'PES1UG21CS647-1'
+                //build 'PES1UG21CS647-1'
             }
         }
         
         stage('Test') {
             steps {
                 sh './output'
-            }
+                 script {
+                    def output = sh(script: './output', returnStdout: true).trim()
+                    echo "Output of main.cpp: ${output}"
+                }
+            }     
         }
         
         stage('Deploy') {
